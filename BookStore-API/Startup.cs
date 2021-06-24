@@ -16,6 +16,8 @@ using System.Reflection;
 using BookStore_API.Services;
 using BookStore_API.Contracts;
 using BookStore_API.Mappings;
+using Npgsql;
+
 
 namespace BookStore_API
 {
@@ -31,9 +33,14 @@ namespace BookStore_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -60,6 +67,7 @@ namespace BookStore_API
             });
 
             services.AddSingleton<iLoggerService, LoggerService>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddControllers();
         }
