@@ -67,7 +67,8 @@ namespace BookStore_API
             });
 
             services.AddSingleton<iLoggerService, LoggerService>();
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();          //Whats does these lines do?
+            services.AddScoped<IBookRepository, BookRepository>();
 
             services.AddControllers();
         }
